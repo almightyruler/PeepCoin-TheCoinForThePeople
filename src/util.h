@@ -598,6 +598,7 @@ public:
     {
         int size = vSorted.size();
         assert(size>0);
+        if (size == 1)  return(vSorted[0]); // single element only
         if(size & 1) // Odd number of elements
         {
             return vSorted[size/2];
