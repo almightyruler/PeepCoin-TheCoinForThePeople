@@ -20,20 +20,24 @@ windows:LIBS += -lshlwapi
 LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB_PATH,,-L,) $$join(QRENCODE_LIB_PATH,,-L,)
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 windows:LIBS += -lws2_32 -lole32 -loleaut32 -luuid -lgdi32
-LIBS += -lboost_system-mgw49-mt-s-1_59 -lboost_filesystem-mgw49-mt-s-1_59 -lboost_program_options-mgw49-mt-s-1_59 -lboost_thread-mgw49-mt-s-1_59
-BOOST_LIB_SUFFIX=-mgw49-mt-s-1_59
-BOOST_INCLUDE_PATH=C:/deps/boost_1_59_0
-BOOST_LIB_PATH=C:/deps/boost_1_59_0/stage/lib
-BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
-BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
-OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1l/include
-OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1l
-MINIUPNPC_INCLUDE_PATH=C:/deps/
-MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
-LIBPNG_INCLUDE_PATH=C:/deps/libpng-1.6.16
-LIBPNG_LIB_PATH=C:/deps/libpng-1.6.16/.libs
-QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.4
-QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.4/.libs
+#LIBS += -lboost_system-mgw49-mt-s-1_59 -lboost_filesystem-mgw49-mt-s-1_59 -lboost_program_options-mgw49-mt-s-1_59 -lboost_thread-mgw49-mt-s-1_59
+LIBS += -lboost_system-mt-s -lboost_filesystem-mt-s -lboost_program_options-mt-s -lboost_thread_win32-mt-s
+
+BOOST_LIB_SUFFIX=-mt-s
+
+BOOST_INCLUDE_PATH=/home/ubuntu/build/boost_1_47_0
+BOOST_LIB_PATH=/home/ubuntu/build/boost_1_47_0/stage/lib
+BDB_INCLUDE_PATH=/home/ubuntu/build/db-4.8.30.NC/build_unix
+BDB_LIB_PATH=/home/ubuntu/build/db-4.8.30.NC/build_unix
+OPENSSL_INCLUDE_PATH=/home/ubuntu/build/openssl-1.0.1t/include
+OPENSSL_LIB_PATH=/home/ubuntu/build/openssl-1.0.1t
+MINIUPNPC_INCLUDE_PATH=/home/ubuntu/build/miniupnpc
+MINIUPNPC_LIB_PATH=/home/ubuntu/build/miniupnpc
+
+#LIBPNG_INCLUDE_PATH=C:/deps/libpng-1.6.16
+#LIBPNG_LIB_PATH=C:/deps/libpng-1.6.16/.libs
+#QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.4
+#QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.4/.libs
 } 
 # for boost 1.37, add -mt to the boost libraries
 # use: qmake BOOST_LIB_SUFFIX=-mt
@@ -73,7 +77,8 @@ QMAKE_LFLAGS *= -fstack-protector-all --param ssp-buffer-size=1
 win32:QMAKE_LFLAGS *= -Wl,--dynamicbase -Wl,--nxcompat
 # on win32: enable GCC large address aware linker flag
 win32:QMAKE_LFLAGS *= -Wl,--large-address-aware -static
-win32:QMAKE_LFLAGS += -static-libgcc -static-libstdc++
+#win32:QMAKE_LFLAGS += -static-libgcc -static-libstdc++
+win32:QMAKE_LFLAGS += -static-libgcc
 lessThan(QT_MAJOR_VERSION, 5): win32: QMAKE_LFLAGS *= -static
 
 # use: qmake "USE_QRCODE=1"
@@ -128,7 +133,8 @@ SOURCES += src/txdb-leveldb.cpp
         QMAKE_RANLIB = $$replace(QMAKE_STRIP, strip, ranlib)
     }
     LIBS += -lshlwapi
-    #genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX TARGET_OS=OS_WINDOWS_CROSSCOMPILE $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libleveldb.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libmemenv.a
+#    genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a
+    genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX TARGET_OS=OS_WINDOWS_CROSSCOMPILE $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libleveldb.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libmemenv.a
 }
 genleveldb.target = $$PWD/src/leveldb/libleveldb.a
 genleveldb.depends = FORCE
@@ -162,7 +168,7 @@ contains(USE_O3, 1) {
     QMAKE_CFLAGS += -msse2
 }
 
-QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wno-ignored-qualifiers -Wformat -Wformat-security -Wno-unused-parameter -Wstack-protector
+QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -Wstack-protector
 
 # Input
 DEPENDPATH += src src/json src/qt
@@ -443,8 +449,9 @@ LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 # -lgdi32 has to happen after -lcrypto (see  #681)
 windows:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
-LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
-windows:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
+#LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
+#windows:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
+windows:LIBS += -lboost_chrono-mt-s
 
 contains(RELEASE, 1) {
     !windows:!macx {
