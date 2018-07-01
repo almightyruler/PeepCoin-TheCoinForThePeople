@@ -1,7 +1,7 @@
 ---
 name: "boost"
 suites:
-- "lucid"
+- "trusty"
 architectures:
 - "i386"
 packages: 
@@ -32,7 +32,7 @@ script: |
   done
   cp -a boost $TMPDIR/include
   cd $TMPDIR
-  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export LD_PRELOAD=/usr/lib/i386-linux-gnu/faketime/libfaketime.so.1
   export FAKETIME=$REFERENCE_DATETIME
-  zip -r boost-win32-1.47.0-gitian.zip *
-  cp boost-win32-1.47.0-gitian.zip $OUTDIR
+  zip -r boost-win32-1.47.0-gitian-trusty.zip *
+  cp boost-win32-1.47.0-gitian-trusty.zip $OUTDIR

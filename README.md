@@ -1,6 +1,7 @@
+This is the source code for Peepcoin, a PoS only cryptocurrency.
 
-Peepcoin development tree
+This client uses the original blockchain started in August 2016. There's no rebranding, no swaps to another coin or chain, no forks, no airdrops, just good old classic Peepcoin!
 
-Peepcoin is a PoS-based cryptocurrency.
+Latest Windows client: http://www.almightycoins.org/peepcoin/download/peepcoin-qt.exe
 
-THE COIN FOR THE PEOPLE
+Support thread: https://bitcointalk.org/index.php?topic=1628121.0

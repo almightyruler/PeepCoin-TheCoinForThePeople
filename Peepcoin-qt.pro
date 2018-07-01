@@ -25,12 +25,12 @@ LIBS += -lboost_system-mt-s -lboost_filesystem-mt-s -lboost_program_options-mt-s
 
 BOOST_LIB_SUFFIX=-mt-s
 
-BOOST_INCLUDE_PATH=/home/ubuntu/build/boost_1_47_0
-BOOST_LIB_PATH=/home/ubuntu/build/boost_1_47_0/stage/lib
+BOOST_INCLUDE_PATH=/home/ubuntu/build/boost
+BOOST_LIB_PATH=/home/ubuntu/build/boost/stage/lib
 BDB_INCLUDE_PATH=/home/ubuntu/build/db-4.8.30.NC/build_unix
 BDB_LIB_PATH=/home/ubuntu/build/db-4.8.30.NC/build_unix
-OPENSSL_INCLUDE_PATH=/home/ubuntu/build/openssl-1.0.1t/include
-OPENSSL_LIB_PATH=/home/ubuntu/build/openssl-1.0.1t
+OPENSSL_INCLUDE_PATH=/home/ubuntu/build/openssl/include
+OPENSSL_LIB_PATH=/home/ubuntu/build/openssl
 MINIUPNPC_INCLUDE_PATH=/home/ubuntu/build/miniupnpc
 MINIUPNPC_LIB_PATH=/home/ubuntu/build/miniupnpc
 
