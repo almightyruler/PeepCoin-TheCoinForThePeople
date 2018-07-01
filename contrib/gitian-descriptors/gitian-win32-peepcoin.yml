@@ -8,7 +8,6 @@ packages:
 - "mingw32"
 - "git-core"
 - "unzip"
-- "nsis"
 - "faketime"
 reference_datetime: "2011-01-30 00:00:00"
 remotes:
@@ -17,8 +16,7 @@ remotes:
 files:
 - "qt-win32-4.8.5-gitian-trusty.zip"
 - "boost-win32-1.50.0-gitian-trusty.zip"
-- "ppcoin-deps-trusty.zip"
-- "peepcoin-new.zip"
+- "peepcoin-deps-trusty.zip"
 script: |
   mkdir $HOME/qt
   cd $HOME/qt
@@ -39,9 +37,7 @@ script: |
   mv include/boost .
   cd ..
   #
-  unzip ppcoin-deps-trusty.zip
-  #
-  #unzip peepcoin-new.zip
+  unzip peepcoin-deps-trusty.zip
   #
   find -type f | xargs touch --date="$REFERENCE_DATETIME"
   #
